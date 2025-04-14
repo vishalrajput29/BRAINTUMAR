@@ -7,7 +7,7 @@ import numpy as np
 import cv2
 
 from ultralytics.nn.modules.block import C3k2  # Or the correct class name
-
+#create
 #load app
 app = Flask(__name__)
 #load model first
