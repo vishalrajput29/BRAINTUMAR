@@ -12,7 +12,7 @@ from ultralytics.nn.modules.block import C3k2  # Or the correct class name
 app = Flask(__name__)
 
 # Load the trained YOLO model (update the path to your model)
-model = YOLO('best (2).pt')
+model = YOLO('best.pt')
 
 # Route to serve the home page
 @app.route('/')
