@@ -8,7 +8,7 @@ import cv2
 
 from ultralytics.nn.modules.block import C3k2  # Or the correct class name
 
-
+#load app
 app = Flask(__name__)
 #load model first
 # Load the trained YOLO model (update the path to your model)
