@@ -17,7 +17,7 @@ model = YOLO('best.pt')
 # Route to serve the home page
 @app.route('/')
 def home():
-    return render_template('index1.html')
+    return render_template('index.html')
 
 # Route to handle image upload and prediction
 @app.route('/predict', methods=['POST'])
