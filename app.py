@@ -3,23 +3,20 @@ from ultralytics import YOLO
 import os
 from PIL import Image
 import io
-import numpy as np
-import cv2
 
-from ultralytics.nn.modules.block import C3k2  # Or the correct class name
-#create
-#load app
 app = Flask(__name__)
-#load model first
-# Load the trained YOLO model (update the path to your model)
-model = YOLO('best.pt')
 
-# Route to serve the home page
+# Load the trained YOLO model
+try:
+    model = YOLO('best.pt')
+    print("✅ YOLO model loaded successfully.")
+except Exception as e:
+    print(f"❌ Failed to load YOLO model: {e}")
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Route to handle image upload and prediction
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' not in request.files:
@@ -30,23 +27,12 @@ def predict():
 
     # Perform inference
     results = model(image)
-
-    # Get the first result (YOLO returns a list of results)
     result = results[0]
-
-    # Convert the result to a numpy array (this is the bounding-boxed image)
-    result_image = result.plot()  # Get the image with bounding boxes
-
-    # Convert numpy array to a PIL Image
+    result_image = result.plot()
     result_image_pil = Image.fromarray(result_image)
 
-    # Save the result to a BytesIO object
     output = io.BytesIO()
     result_image_pil.save(output, format="JPEG")
     output.seek(0)
 
-    # Return the processed image
     return send_file(output, mimetype='image/jpeg')
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000)
